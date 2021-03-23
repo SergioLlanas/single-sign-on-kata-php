@@ -2,9 +2,11 @@
 
 namespace MyService;
 
+use Deg540\PHPTestingBoilerplate\Test\StubSessionManager;
 use SSO\Request;
 use SSO\Response;
 use SSO\SingleSignOnRegistry;
+use SSO\SSOToken;
 
 class MyService
 {
@@ -28,7 +30,12 @@ class MyService
      */
     public function handleRequest(Request $request)
     {
+
+        if(!$this->registry->isValid($request->getToken())){
+            return new Response("usuario no valido");
+        }
         return new Response("hello ".$request->getName()."!");
+
     }
 	
     /**
