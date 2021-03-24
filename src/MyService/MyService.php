@@ -3,6 +3,8 @@
 namespace MyService;
 
 use Deg540\PHPTestingBoilerplate\Test\StubSessionManager;
+use PhpParser\Node\Expr\Cast\Object_;
+use SSO\AuthenticationGateway;
 use SSO\Request;
 use SSO\Response;
 use SSO\SingleSignOnRegistry;
@@ -14,13 +16,24 @@ class MyService
      * @var SingleSignOnRegistry
      */
     private $registry;
+    /**
+     * @var AuthenticationGateway
+     */
+    private $authentication;
+
+    /**
+     * @var SSOToken
+     */
+    private $token;
 
     /**
      * @param SingleSignOnRegistry $registry
      */
-    public function __construct(?SingleSignOnRegistry $registry)
+    public function __construct(?SingleSignOnRegistry $registry, ?AuthenticationGateway $authentication)
     {
         $this->registry = $registry;
+        $this->authentication = $authentication;
+        $token = new SSOToken();
     }
 
     /**
@@ -30,7 +43,6 @@ class MyService
      */
     public function handleRequest(Request $request)
     {
-
         if(!$this->registry->isValid($request->getToken())){
             return new Response("usuario no valido");
         }
@@ -46,7 +58,10 @@ class MyService
      */
     public function handleRegister($username, $password)
     {
-        return;
+        if(!$this->authentication->credentialsAreValid($username,$password)){
+            return null;
+        }
+        return $this->registry->registerNewSession($username,$password);
     }
 	
     /**
