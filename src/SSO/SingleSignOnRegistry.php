@@ -17,7 +17,7 @@ interface SingleSignOnRegistry
      *
      * @return boolean
      */
-    public function isValid(SSOToken $token);
+    public function SSOTokenISValid(SSOToken $token);
 
     /**
      * @param SSOToken $token

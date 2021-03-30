@@ -43,7 +43,7 @@ class MyService
      */
     public function handleRequest(Request $request)
     {
-        if(!$this->registry->isValid($request->getToken())){
+        if(!$this->registry->SSOTokenISValid($request->getToken())){
             return new Response("usuario no valido");
         }
         return new Response("hello ".$request->getName()."!");

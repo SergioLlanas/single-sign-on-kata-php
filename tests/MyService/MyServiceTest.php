@@ -24,7 +24,7 @@ class MyServiceTest extends TestCase
     /**
      * @test
      */
-    public function invalidSSOTokenIsRejected()
+    public function IfSSOTokenISInvalidIsRejected()
     {
         $stub = new StubSingleSignOnIsFalse();
         $myService = new MyService($stub,null);
@@ -39,7 +39,7 @@ class MyServiceTest extends TestCase
      */
     public function invalidSSOTokenIsRejectedWithProphet()
     {
-        $this->stubSingleSignOnRegistry->isValid(new SSOToken())->willReturn(false);
+        $this->stubSingleSignOnRegistry->SSOTokenISValid(new SSOToken())->willReturn(false);
         $myService = new MyService($this->stubSingleSignOnRegistry->reveal(),null);
 
         $response = $myService->handleRequest(new Request("Foo", new SSOToken()));
@@ -50,9 +50,9 @@ class MyServiceTest extends TestCase
     /**
      * @test
      */
-    public function validSSOTokenIsRejectedWithProphet()
+    public function IfSSOTokenisValidReturnHelloFoo()
     {
-        $this->stubSingleSignOnRegistry->isValid(new SSOToken())->willReturn(true);
+        $this->stubSingleSignOnRegistry->SSOTokenISValid(new SSOToken())->willReturn(true);
         $myService = new MyService($this->stubSingleSignOnRegistry->reveal(),null);
 
         $response = $myService->handleRequest(new Request("Foo", new SSOToken()));

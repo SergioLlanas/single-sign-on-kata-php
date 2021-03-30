@@ -23,7 +23,7 @@ class StubSingleSignOnIsFalse implements SingleSignOnRegistry
         // TODO: Implement registerNewSession() method.
     }
 
-    public function isValid(SSOToken $token)
+    public function SSOTokenISValid(SSOToken $token)
     {
         return false;
         // TODO: Implement isValid() method.
